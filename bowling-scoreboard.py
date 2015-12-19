@@ -51,15 +51,25 @@ def frame_sum(R1, R2):
     return total
 
 
-# Returns new score, accounting for strike/spare bonus points
-def update_score(total_score, R1, R2, bonus):
-    if R1 != None:
-        total_score += R1
-    if R2 != None:
-        total_score += R2
-    if bonus != None:
-        total_score += bonus
-    return total_score
+# Checks that each roll score is between 1-10
+def in_bounds(score):
+    if score != None and (score < 0 or score > 10):
+        sys.exit("Error: Scores must be between 0-10")
+
+
+# Prints the tab-separated scores for rolls in each frame
+def print_row(frame, R1, R2, R3, total_score):
+    in_bounds(R1), in_bounds(R2), in_bounds(R3)
+    if (R1 == None) and (R2 == None) and (R3 == None):
+        return
+
+    if R1 == None:
+        R1 = ' '
+    if R2 == None:
+        R2 = ' '
+    if R3 == None:
+        R3 = ' '
+    print frame, '\t', R1, '\t', R2, '\t', R3, '\t', total_score
 
 
 # Removes and returns the int value of given index, otherwise returns None
@@ -78,18 +88,15 @@ def safe_peek(rolls, index):
         return None
 
 
-# Prints the tab-separated scores for rolls in each frame
-def print_row(frame, R1, R2, R3, total_score):
-    if (R1 == None) and (R2 == None) and (R3 == None):
-        return
-
-    if R1 == None:
-        R1 = ' '
-    if R2 == None:
-        R2 = ' '
-    if R3 == None:
-        R3 = ' '
-    print frame, '\t', R1, '\t', R2, '\t', R3, '\t', total_score
+# Returns new score, accounting for strike/spare bonus points
+def update_score(total_score, R1, R2, bonus):
+    if R1 != None:
+        total_score += R1
+    if R2 != None:
+        total_score += R2
+    if bonus != None:
+        total_score += bonus
+    return total_score
 
 
 # Call the main function
